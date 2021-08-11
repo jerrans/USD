@@ -33,7 +33,7 @@
 // compiler that HgiVulkan is compiled with.
 #include <glslang/Public/ShaderLang.h>
 #include <glslang/SPIRV/GlslangToSpv.h>
-#include <OGLCompilersDLL/InitializeDll.h>
+//#include <OGLCompilersDLL/InitializeDll.h>
 
 
 PXR_NAMESPACE_OPEN_SCOPE
@@ -67,14 +67,14 @@ HgiVulkanCompileGLSL(
     // InitializeProcess() should be called exactly once per PROCESS.
     // We also have the option to call glslang::FinalizeProcess() in case we
     // need to re-initialize in the process, but we have no such need currently.
-    static bool glslangInitialized = glslang::InitializeProcess();
+    static bool glslangInitialized = ShInitialize();
 
     if (ARCH_UNLIKELY(!glslangInitialized)) {
         TF_CODING_ERROR("Glslang not initialized in process.");
     }
 
     // Each thread that uses glslang compiler must initialize.
-    glslang::InitThread();
+    //glslang::InitThread();
 
     if (numShaderCodes==0 || !spirvOUT) {
         if (errors) {
@@ -207,6 +207,7 @@ HgiVulkanCompileGLSL(
         /* .maxTaskWorkGroupSizeY_NV = */ 1,
         /* .maxTaskWorkGroupSizeZ_NV = */ 1,
         /* .maxMeshViewCountNV = */ 4,
+        /* .maxDualSourceDrawBuffersEXT = */ 1,
 
         /* .limits = */ {
             /* .nonInductiveForLoops = */ 1,
@@ -218,7 +219,8 @@ HgiVulkanCompileGLSL(
             /* .generalSamplerIndexing = */ 1,
             /* .generalVariableIndexing = */ 1,
             /* .generalConstantMatrixVectorIndexing = */ 1,
-        }};
+        } };
+
 
     EShMessages messages = (EShMessages) (EShMsgSpvRules | EShMsgVulkanRules);
 

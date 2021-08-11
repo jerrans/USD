@@ -30,7 +30,7 @@
 
 PXR_NAMESPACE_OPEN_SCOPE
 
-TF_DEFINE_ENV_SETTING(HGI_ENABLE_VULKAN, 0,
+TF_DEFINE_ENV_SETTING(HGI_ENABLE_VULKAN, 1,
                       "Enable Vulkan as platform default Hgi backend (WIP)");
 
 TF_REGISTRY_FUNCTION(TfType)

@@ -791,7 +791,8 @@ BOOST = Dependency("boost", InstallBoost, BOOST_VERSION_FILE)
 # Intel TBB
 
 if Windows():
-    TBB_URL = "https://github.com/oneapi-src/oneTBB/releases/download/2018_U6/tbb2018_20180822oss_win.zip"
+    TBB_URL = "https://github.com/oneapi-src/oneTBB/releases/download/v2020.0/tbb-2020.0-win.zip"
+    #TBB_URL = "https://github.com/oneapi-src/oneTBB/releases/download/2018_U6/tbb2018_20180822oss_win.zip"
 elif MacOS():
     # On MacOS we experience various crashes in tests during teardown
     # starting with 2018 Update 2. Until we figure that out, we use
@@ -807,7 +808,7 @@ def InstallTBB(context, force, buildArgs):
         InstallTBB_LinuxOrMacOS(context, force, buildArgs)
 
 def InstallTBB_Windows(context, force, buildArgs):
-    TBB_ROOT_DIR_NAME = "tbb2018_20180822oss"
+    TBB_ROOT_DIR_NAME = "tbb"
     with CurrentWorkingDirectory(DownloadURL(TBB_URL, context, force, 
         TBB_ROOT_DIR_NAME)):
         # On Windows, we simply copy headers and pre-built DLLs to
@@ -1465,6 +1466,8 @@ def InstallUSD(context, force, buildArgs):
         if Windows():
             # Increase the precompiled header buffer limit.
             extraArgs.append('-DCMAKE_CXX_FLAGS="/Zm150"')
+
+        extraArgs.append('-DPXR_ENABLE_VULKAN_SUPPORT=TRUE')
 
         # Make sure to use boost installed by the build script and not any
         # system installed boost

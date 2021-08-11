@@ -31,6 +31,10 @@
 #include <functional>
 #include <vector>
 
+#if defined(MemoryBarrier)
+#undef MemoryBarrier
+#endif
+
 PXR_NAMESPACE_OPEN_SCOPE
 
 class HgiVulkanDevice;

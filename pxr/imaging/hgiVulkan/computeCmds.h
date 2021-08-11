@@ -30,11 +30,15 @@
 #include "pxr/imaging/hgiVulkan/api.h"
 #include "pxr/imaging/hgiVulkan/vulkan.h"
 
+
+#if defined(MemoryBarrier)
+#undef MemoryBarrier
+#endif
+
 PXR_NAMESPACE_OPEN_SCOPE
 
 class HgiVulkan;
 class HgiVulkanCommandBuffer;
-
 
 /// \class HgiVulkanComputeCmds
 ///

@@ -31,6 +31,11 @@
 #include "pxr/imaging/hgi/cmds.h"
 #include <memory>
 
+
+#if defined(MemoryBarrier)
+#undef MemoryBarrier
+#endif
+
 PXR_NAMESPACE_OPEN_SCOPE
 
 using HgiComputeCmdsUniquePtr = std::unique_ptr<class HgiComputeCmds>;
