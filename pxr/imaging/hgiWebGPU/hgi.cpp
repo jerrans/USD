@@ -165,6 +165,7 @@ wgpu::Device GetDevice() {
         return "?";
     }
 
+    // TODO: should make sure we destroy this properly
     wgpu::Device s_device = nullptr;
 
     wgpu::Device GetDevice() {
