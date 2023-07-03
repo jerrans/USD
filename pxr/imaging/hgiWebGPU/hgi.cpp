@@ -165,7 +165,13 @@ wgpu::Device GetDevice() {
         return "?";
     }
 
+    wgpu::Device s_device = nullptr;
+
     wgpu::Device GetDevice() {
+        if(s_device)
+        {
+            return s_device;
+        }
         instance = std::make_unique<dawn::native::Instance>();
         instance->DiscoverDefaultAdapters();
 
@@ -208,14 +214,14 @@ wgpu::Device GetDevice() {
         descriptor.requiredFeaturesCount = 1;
 
         WGPUDevice cDevice = backendAdapter.CreateDevice(&descriptor);
-        wgpu::Device device = wgpu::Device::Acquire(cDevice);
+        s_device = wgpu::Device::Acquire(cDevice);
         DawnProcTable procs = dawn::native::GetProcs();
 
         dawnProcSetProcs(&procs);
 
         procs.deviceSetUncapturedErrorCallback(cDevice, PrintDeviceError, nullptr);
         procs.deviceSetDeviceLostCallback(cDevice, DeviceLostCallback, nullptr);
-        return device;
+        return s_device;
     }
 #endif  // __EMSCRIPTEN__
 
